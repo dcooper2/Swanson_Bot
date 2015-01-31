@@ -3,8 +3,11 @@ import praw
 import re
 import os
 import pickle
+from array import *
+import random
 
-REPLY = "I want all the bacon and eggs you have."
+#REPLY = "I want all the bacon and eggs you have."
+REPLY = array('i',["I want all the bacon and eggs you have", "I know what I'm about son", "I'm not interested in caring about people", "Is this not rap?"])
 
 if not os.path.isfile("inigo_config.txt"):
     print "You must create the file swanson_config.txt with the pickled credentials."
@@ -39,7 +42,8 @@ for submission in subreddit.get_hot(limit=10):
     print "Checking submission ", submission.id
     if submission.id not in replies:
         if re.search("Ron Swanson", submission.title, re.IGNORECASE) or re.search("Ron Swanson", submission.selftext, re.IGNORECASE):
-            submission.add_comment(REPLY)
+            x = random.randint(0,3)
+            submission.add_comment(REPLY[x])
             print "Bot replying to submission: ", submission.id
             replies.append(submission.id)
     print "Checking comments"
@@ -47,8 +51,9 @@ for submission in subreddit.get_hot(limit=10):
     for comment in flat_comments:
         if comment.id not in replies: 
             if re.search("Ron Swanson", comment.body, re.IGNORECASE):
+                y = random.randint(0,3)
                 print "Bot replying to comment: ", comment.id
-                comment.reply(REPLY)
+                comment.reply(REPLY[y])
                 replies.append(comment.id)
 
 # Save new replies
