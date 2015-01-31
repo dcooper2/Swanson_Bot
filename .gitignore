@@ -52,3 +52,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+swanson_config.txt
+replies.txt
+var.py
